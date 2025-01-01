@@ -48,6 +48,39 @@ def longest_substring(original_string):
 
     return longest_so_far
 
-print(longest_substring('clementisacap')) # "mentisac"
-print(longest_substring("aaaaaaaaaaaa")) # "a"
-print(longest_substring('')) # ''
+# print(longest_substring('clementisacap')) # "mentisac"
+# print(longest_substring("aaaaaaaaaaaa")) # "a"
+# print(longest_substring('')) # ''
+
+''' 
+We can solve this problem more efficiently by traversing the string and storing the last position at which we see each character in a hash table
+ which we'll call lastSeen. We'll also keep track of the longest string we've seen so far. As we traverse the string we'll keep track of a 
+ variable called startIdx which will represent the most recent index from which we can start a substring with no duplicate characters, 
+ ending at the current index. If we come across a character that we've already seen then we'll update our startIdx to be the maximum of the 
+ current startIdx and the position of the element the last time we saw it + 1. Updating the startIdx in this way will make sure that we don't 
+ end up moving the startIdx backward when we encounter a duplicate character late in the string. If the current string from the startIdx to the
+current position + 1 is greater than the length of the longest string we've seen so far, we'll update longest to the current string.
+'''
+
+
+def longest_substring_optimized(string):
+    last_seen = {}
+    longest_so_far = ''
+    startIdx = 0
+    for current_index in range(0, len(string)):
+        current_char = string[current_index]
+        if current_char in last_seen:
+            startIdx = max(startIdx, last_seen[current_char] + 1)
+        last_seen[current_char] = current_index
+        current_substring = string[startIdx:current_index + 1]
+        if len(current_substring) > len(longest_so_far):
+            longest_so_far = current_substring
+    
+    return longest_so_far
+
+
+
+print(longest_substring_optimized('clementisacap')) # "mentisac"
+print(longest_substring_optimized("aaaaaaaaaaaa")) # "a"
+print(longest_substring_optimized('')) # ''
+
