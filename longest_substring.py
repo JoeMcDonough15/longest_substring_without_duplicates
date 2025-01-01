@@ -84,3 +84,4 @@ print(longest_substring_optimized('clementisacap')) # "mentisac"
 print(longest_substring_optimized("aaaaaaaaaaaa")) # "a"
 print(longest_substring_optimized('')) # ''
 
+## The time complexity on the above solution is O(n) & the space is O(min(n, a)) where n is the length of the string and a is the number of unique characters in the string.
